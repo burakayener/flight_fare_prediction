@@ -151,7 +151,7 @@ def voting_regressor(X, y, best_models):
     voting_reg = VotingRegressor(
         estimators=[('RF', best_models["RF"]), ('GBM', best_models["GBM"]), ('ET', best_models["ET"])]).fit(X, y)
     scores = cross_validate(voting_reg, X, y,
-                         scoring=["neg_mean_squared_error","r2","neg_mean_absolute_error"], cv=5)
+                         scoring=["neg_mean_squared_error","r2","neg_mean_absolute_error", "neg_mean_absolute_percentage_error"], cv=5)
     print("Voting Regressor Scores" ,'\n' ,"MSE:", -(scores["test_neg_mean_squared_error"].mean()),"\n", "R2:", scores["test_r2"].mean(),"\n",
-            "MAE:" -(scores["test_neg_mean_absolute_error"].mean(), "\n", "MAEP:" -(scores["test_neg_mean_absolute_percentage_error"].mean()))
+            "MAE:" -(scores["test_neg_mean_absolute_error"].mean(), "\n", "MAPE:" -(scores["test_neg_mean_absolute_percentage_error"].mean())))
     return voting_reg 
